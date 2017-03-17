@@ -1,0 +1,1 @@
+This is origin from `a10-gui-5.x\generator\utils` should be moved to widget lib in the future.

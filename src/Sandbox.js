@@ -71,17 +71,20 @@ const reactSchemaSource = {
   component: 'RootWidget',
   schemaChildren: [
     {
+      _componentId: "form",
       component: "A10Form",
       name: "SlbCommonConnRateLimitForm",
       schema: "slb-common-conn-rate-limit",
       horizontal: true,
       schemaChildren: [
         {
+          _componentId: "ip",
           component: "A10Field",
           name: "conn-rate-limit.src-ip-list",
           label: "Src Ip List"
         },
         {
+          _componentId: "submit",
           component: "A10SubmitButtons"
         }
       ]

@@ -1,5 +1,5 @@
 
-import SchemaAnalysis from '../../../a10-gui-5.x/generator/utils/SchemaAnalysis';
+import SchemaAnalysis from './generator/SchemaAnalysis';
 
 const getSchema = (name) => {
   console.log(`get schema of ${name}`);
