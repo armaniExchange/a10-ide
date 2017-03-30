@@ -108,8 +108,6 @@ export default class MainPanel extends React.Component {
       activeKey
     } = this.state;
 
-    const schemaWithPath = editableUtils.appendPath(Object.assign({}, schema));
-
     return (
       <Tabs activeKey={activeKey} onSelect={this.onSelect} id="sandbox-main-area">
         <Tab eventKey={1} title={<span><i className="fa fa-pencil" />&nbsp;Edit</span>}>
@@ -118,7 +116,7 @@ export default class MainPanel extends React.Component {
               <div>
                 <Panel>
                   {
-                    editableUtils.jsonToComponent(schemaWithPath, true, { editingComponentId }, {
+                    editableUtils.jsonToComponent(schema, true, { editingComponentId }, {
                       startToEditComponent,
                       deleteComponent,
                       moveComponent

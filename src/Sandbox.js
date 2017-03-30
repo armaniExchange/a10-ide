@@ -66,7 +66,7 @@ const noSchemaData = {
 };
 
 
-const reactSchemaSource = {
+const reactSchemaSource = editableUtils.loadSchema({
   _componentId: 'root',
   component: 'RootWidget',
   schemaChildren: [
@@ -91,7 +91,7 @@ const reactSchemaSource = {
     }
   ],
   _isRoot: true
-};
+});
 
 
 @dragDropContext(HTML5Backend)

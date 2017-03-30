@@ -24,36 +24,35 @@ const registerComponents = (componentsDict) => {
 let _cachedWrappedComponents;
 _cachedWrappedComponents = {};
 
-const loadSchema = (schema, notRoot = false) => {
-
-  schema._componentId = schema._componentId ||  (!notRoot ? '_root' : _.uniqueId());
-  if(!notRoot) {
-    schema._isRoot = true;
-  }
+const prepareSchema = (schema, meta ={_keypath: [], _path: []}) => {
   if (schema._isContainer || registeredComponents[schema.component] && registeredComponents[schema.component].meta.widget.isContainer) {
     schema._isContainer = true;
   }
 
   return {
+    ...meta,
     ...schema,
     schemaChildren: !schema.schemaChildren || typeof schema.schemaChildren === 'string' ? schema.schemaChildren :
       schema.schemaChildren
-      .map(item => loadSchema(item, true))
+      .map((item, index) => {
+        var _componentId = item._componentId ||  _.uniqueId();
+        var nextMeta = {
+          _componentId,
+          _path: [
+            ...meta._path, {
+              _componentId,
+              component: item.component
+            }
+          ],
+          _keypath: [...meta._keypath, 'schemaChildren', index],
+        };
+        return prepareSchema(item, nextMeta);
+      })
   };
 };
-const appendPath = (obj, _path = []) => {
-  const {
-    _componentId,
-    component,
-    schemaChildren
-  } = obj;
-  obj._path = [ ..._path, { _componentId, component } ];
-  if (typeof schemaChildren !== 'string') {
-    obj.schemaChildren = (schemaChildren || []).map((item) => {
-      return appendPath(Object.assign({}, item), obj._path);
-    });
-  } 
-  return Object.assign({}, obj);
+
+const loadSchema = (schema, notRoot = false) => {
+  return Object.assign({ _isRoot: true }, prepareSchema(schema))
 };
 
 const jsonToComponent = (obj, enableWrap = false, props = {}, actions = {}) => {
@@ -78,16 +77,17 @@ const jsonToComponent = (obj, enableWrap = false, props = {}, actions = {}) => {
     }
     reactComponent = _cachedWrappedComponents[component];
   }
-  const reactComponentChildren = !schemaChildren || typeof schemaChildren === 'string' ? [ 
-    schemaChildren 
+  const reactComponentChildren = !schemaChildren || typeof schemaChildren === 'string' ? [
+    schemaChildren
   ] : (
     (schemaChildren || []).map(item => jsonToComponent(item, enableWrap, props, actions))
   );
 
   return React.createElement
-    .apply(this, [ 
-      reactComponent, 
-      Object.assign({}, obj, props, { key: obj._componentId, isComponentEditor: true }), ...reactComponentChildren 
+    .apply(this, [
+      reactComponent,
+      Object.assign({}, obj, props, { key: obj._componentId, isComponentEditor: true }),
+      ...reactComponentChildren
     ]);
 };
 
@@ -108,7 +108,7 @@ const updateComponent = (schema, _componentId, component) => {
     schemaChildren: !schema.schemaChildren || typeof schema.schemaChildren === 'string' ? schema.schemaChildren :
       schema.schemaChildren
       .map(item => {
-        if ( item._componentId === _componentId) {
+        if ( item._componentId === _componentId ) {
           Object.assign(item, component);
         }
         return updateComponent(item, _componentId, component);
@@ -157,6 +157,8 @@ const toJSX = (schema, indent = 0) =>{
   const props = Object.assign({}, schema, {
     _isContainer: null,
     _componentId: null,
+    _path: null,
+    _keypath: null,
     _isRoot: null,
     component: null,
     children: null,
@@ -210,7 +212,7 @@ const generateReactCode = (name='Demo', schema) => {
   const importAllComponents = getAllComponents(schema)
     .map((item=> `import ${item} from '../widgets/${item}';`))
     .join('\n');
-    
+
   return `import React from 'react';
 ${importAllComponents}
 
@@ -228,7 +230,7 @@ const generateReactCodeFromSchema = (name, schema) => generateReactCode(name, sc
 
 
 export default {
-  appendPath,
+  prepareSchema,
   loadSchema,
   registerComponents,
   jsonToComponent,

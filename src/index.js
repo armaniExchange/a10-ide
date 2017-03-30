@@ -24,11 +24,12 @@ if (module.hot) {
   // and display an overlay for runtime errors
   const renderApp = render;
   const renderError = (error) => {
-    const RedBox = require('redbox-react');
-    ReactDOM.render(
-      <RedBox error={error} className="redbox"/>,
-      dest
-    );
+    // const RedBox = require('redbox-react');
+    console.error(error);
+    // ReactDOM.render(
+    //   <RedBox error={error} className="redbox"/>,
+    //   dest
+    // );
   };
 
   render = () => {
