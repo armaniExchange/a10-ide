@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { A10SubmitButtons, widgetWrapper } from 'a10-widget';
+import { A10SubmitButtons } from 'a10-widget';
 
 function MyA10SubmitButtons({ ...props }) {
   let newProps = {};
@@ -12,21 +12,19 @@ function MyA10SubmitButtons({ ...props }) {
   );
 }
 
-export default widgetWrapper()(MyA10SubmitButtons, {
+export default Object.assign(MyA10SubmitButtons, {
   meta: {
     widget: {
       iconClassName: 'fa fa-rocket',
-      type: 'Field',
+      type: 'A10 Widget - Form',
       name: 'A10SubmitButtons',
       component: 'A10SubmitButtons',
-      display: 'block',
+      display: 'inline-block',
       isContainer: false,
       description: ''
     },
-    defaultProps: {},
-    propTypes: Object.assign({}, A10SubmitButtons.propTypes, {}),
-    propGroups: {
-      store: 'ignore'
-    }
+    defaultProps: A10SubmitButtons.defaultProps,
+    propTypes: A10SubmitButtons.propTypes,
+    propGroups: {}
   }
 });

@@ -68,9 +68,9 @@ class ConvertForm {
     const fieldTemplates = this.sa.renderFields().join('\n  ');
     const button = this.sa.renderSubmitButton();
     return `<${this.mapping.component}>
-  ${fieldTemplates}
-  ${button}
-</${this.mapping.component}>`;
+      ${fieldTemplates}
+      ${button}
+    </${this.mapping.component}>`;
   }
 
   getMapping() {

@@ -59,8 +59,8 @@ export default function editableComponent({
         return;
       }
       handleHoverAndDrop({
-        props, 
-        monitor, 
+        props,
+        monitor,
         component,
         item,
         clientOffset: monitor.getClientOffset()
@@ -69,6 +69,7 @@ export default function editableComponent({
   };
 
   return (WrappedComponent, meta) => {
+
     /* eslint-disable */
     @dragSource(DndTypes.COMPONENT, componentSource, (dragConnect, monitor) => ({
       connectDragSource: dragConnect.dragSource(),
@@ -153,13 +154,13 @@ export default function editableComponent({
         const propsWithouChildren = Object.assign({}, this.props, { children: null });
         if (meta.widget.isWrapperItself) {
           return (
-            <WrappedComponent 
-              {...propsWithouChildren} 
+            <WrappedComponent
+              {...propsWithouChildren}
               style={isDragging? { opacity: .7 } : { opacity: 1 }}
-              ref={this.getRefOfWrappedComponent} 
+              ref={this.getRefOfWrappedComponent}
               className="editable-component-wrapper"
-            > 
-              <div 
+            >
+              <div
                 onClick={this.editProperties}
                 className={componentClassName}
               >
@@ -173,7 +174,7 @@ export default function editableComponent({
           return (
             <div className="editable-component-wrapper" ref={this.getRefOfWrappedComponent} style={isDragging? { opacity: .7 } : { opacity: 1 }}>
               <WrappedComponent {...propsWithouChildren}  />
-              <div 
+              <div
                 onClick={this.editProperties}
                 className={componentClassName}
               >
