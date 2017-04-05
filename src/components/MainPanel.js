@@ -22,6 +22,7 @@ export default class MainPanel extends React.Component {
     startToEditComponent: PropTypes.func,
     deleteComponent: PropTypes.func,
     moveComponent: PropTypes.func,
+    saveLayout: PropTypes.func,
     downloadFile: PropTypes.func,
     editingPath: PropTypes.array
   };
@@ -54,14 +55,14 @@ export default class MainPanel extends React.Component {
     });
   }
 
-  generateSchemaCode = () => {
+  generateSchemaCode = (withExportDefault = true) => {
     const { schema } = this.props;
     const {
       icon,
       type,
       name
     } = this.state;
-    return 'export default ' + JSON.stringify({
+    return (withExportDefault ? 'export default ' : '') + JSON.stringify({
       iconClassName: `fa ${icon}`,
       type,
       name,
@@ -86,9 +87,37 @@ export default class MainPanel extends React.Component {
     downloadFile(`${name}-schema`, this.generateSchemaCode());
   }
 
+  saveLayout = () => {
+    const {
+      icon,
+      type,
+      name
+    } = this.state;
+    const { schema } = this.props;
+    this.props.saveLayout({
+      iconClassName: `fa ${icon}`,
+      type,
+      name,
+      schema
+    });
+  }
+
   onSelect = (key) => {
     console.log('key:' + key);
     this.setState({ activeKey: key });
+  }
+
+  renderButtonGroup = () => {
+    return (
+      <ButtonToolbar className="pull-right">
+        <Button bsStyle="primary" onClick={this.saveLayout} >
+          <i className="fa fa-save"/>&nbsp;Save
+        </Button>
+        <Button onClick={this.downloadJsxFile} >
+          <i className="fa fa-download"/>&nbsp;Download
+        </Button>
+      </ButtonToolbar>
+    )
   }
 
   render() {
@@ -109,131 +138,91 @@ export default class MainPanel extends React.Component {
     } = this.state;
 
     const schemaWithPath = editableUtils.appendPath(Object.assign({}, schema));
-
     return (
-      <Tabs activeKey={activeKey} onSelect={this.onSelect} id="sandbox-main-area">
-        <Tab eventKey={1} title={<span><i className="fa fa-pencil" />&nbsp;Edit</span>}>
-          {
-            activeKey === 1 && (
-              <div>
-                <Panel>
-                  {
-                    editableUtils.jsonToComponent(schemaWithPath, true, { editingComponentId }, {
-                      startToEditComponent,
-                      deleteComponent,
-                      moveComponent
-                    })
-                  }
-                </Panel>
-                <ComponentPath path={editingPath} />
-              </div>
-            )
-          }
-
-        </Tab>
-        <Tab eventKey={2} title={<span><i className="fa fa-eye" />&nbsp;Preview</span>}>
-         {
-          activeKey === 2 && (
+      <div>
+        <Tabs activeKey={activeKey} onSelect={this.onSelect} id="sandbox-main-area">
+          <Tab eventKey={1} title={<span><i className="fa fa-pencil" />&nbsp;Edit</span>}>
+            <div>
+              <Panel>
+                {
+                  editableUtils.jsonToComponent(schemaWithPath, true, { editingComponentId }, {
+                    startToEditComponent,
+                    deleteComponent,
+                    moveComponent
+                  })
+                }
+              </Panel>
+              <ComponentPath path={editingPath} />
+            </div>
+          </Tab>
+          <Tab eventKey={2} title={<span><i className="fa fa-eye" />&nbsp;Preview</span>}>
             <Panel>
               { editableUtils.jsonToComponent(schema, false) }
             </Panel>
-          )
-         }
-        </Tab>
-        <Tab eventKey={3} title={<span><i className="fa fa-code" />&nbsp;Code</span>}>
-          {
-            activeKey === 3 && (
-              <div>
-                <Highlight
-                  style={{ maxHeight: 400, overflowY: 'scroll' }}
-                  className="javascript"
-                >
-                  { editableUtils.generateReactCodeFromSchema(name, schema) }
-                </Highlight>
-
-                <ButtonToolbar className="pull-right">
-                  <Button bsStyle="primary" >
-                    <i className="fa fa-save"/>&nbsp;Save
-                  </Button>
-                  <Button onClick={this.downloadJsxFile} >
-                    <i className="fa fa-download"/>&nbsp;Download
-                  </Button>
-                </ButtonToolbar>
-              </div>
-            )
-          }
-        </Tab>
-        <Tab eventKey={4} title={<span><i className="fa fa-codepen" />&nbsp;Schema</span>}>
-          {
-            activeKey === 4 && (
-              <div>
-                <Highlight
-                  className="javascript"
-                >
-                  { this.generateSchemaCode() }
-                </Highlight>
-                <ButtonToolbar className="pull-right">
-                  <Button bsStyle="primary" >
-                    <i className="fa fa-save"/>&nbsp;Save
-                  </Button>
-                  <Button onClick={this.downloadSchemaFile} >
-                    <i className="fa fa-download"/>&nbsp;Download
-                  </Button>
-                </ButtonToolbar>
-              </div>
-            )
-          }
-        </Tab>
-        <Tab eventKey={5} title={<span><i className="fa fa-gear" />&nbsp;Properties</span>}>
-          {
-            activeKey === 5 && (
-              <Panel>
-                <Form horizontal>
-                  <FormGroup>
-                    <Col componentClass={ControlLabel} sm={2}>
-                      Type
-                    </Col>
-                    <Col sm={10}>
-                      <FormControl
-                        type="text"
-                        onChange={this.onTypeChange}
-                        value={type}
-                        placeholder="type"
-                      />
-                    </Col>
-                  </FormGroup>
-                  <FormGroup>
-                    <Col componentClass={ControlLabel} sm={2}>
-                      Name
-                    </Col>
-                    <Col sm={10}>
-                      <FormControl
-                        type="text"
-                        onChange={this.onNameChange}
-                        value={name}
-                        placeholder="name"
-                      />
-                    </Col>
-                  </FormGroup>
-                  <FormGroup>
-                    <Col componentClass={ControlLabel} sm={2}>
-                      Icon
-                    </Col>
-                    <Col sm={10}>
-                      <FormControl
-                        type="text"
-                        onChange={this.onIconChange}
-                        value={icon}
-                        placeholder="icon"
-                      />
-                    </Col>
-                  </FormGroup>
-                </Form>
-              </Panel>
-            )
-          }
-        </Tab>
-      </Tabs>
+          </Tab>
+          <Tab eventKey={3} title={<span><i className="fa fa-code" />&nbsp;Code</span>}>
+            <Highlight
+              style={{ maxHeight: 400, overflowY: 'scroll' }}
+              className="javascript"
+            >
+              { editableUtils.generateReactCodeFromSchema(name, schema) }
+            </Highlight>
+          </Tab>
+          <Tab eventKey={4} title={<span><i className="fa fa-codepen" />&nbsp;Schema</span>}>
+            <Highlight
+              className="javascript"
+            >
+              { this.generateSchemaCode() }
+            </Highlight>
+          </Tab>
+          <Tab eventKey={5} title={<span><i className="fa fa-gear" />&nbsp;Properties</span>}>
+          <Panel>
+            <Form horizontal>
+              <FormGroup>
+                <Col componentClass={ControlLabel} sm={2}>
+                  Type
+                </Col>
+                <Col sm={10}>
+                  <FormControl
+                    type="text"
+                    onChange={this.onTypeChange}
+                    value={type}
+                    placeholder="type"
+                  />
+                </Col>
+              </FormGroup>
+              <FormGroup>
+                <Col componentClass={ControlLabel} sm={2}>
+                  Name
+                </Col>
+                <Col sm={10}>
+                  <FormControl
+                    type="text"
+                    onChange={this.onNameChange}
+                    value={name}
+                    placeholder="name"
+                  />
+                </Col>
+              </FormGroup>
+              <FormGroup>
+                <Col componentClass={ControlLabel} sm={2}>
+                  Icon
+                </Col>
+                <Col sm={10}>
+                  <FormControl
+                    type="text"
+                    onChange={this.onIconChange}
+                    value={icon}
+                    placeholder="icon"
+                  />
+                </Col>
+              </FormGroup>
+            </Form>
+          </Panel>
+          </Tab>
+        </Tabs>
+        {this.renderButtonGroup()}
+      </div>
     );
   }
 }

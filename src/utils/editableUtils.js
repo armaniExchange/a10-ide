@@ -52,7 +52,7 @@ const appendPath = (obj, _path = []) => {
     obj.schemaChildren = (schemaChildren || []).map((item) => {
       return appendPath(Object.assign({}, item), obj._path);
     });
-  } 
+  }
   return Object.assign({}, obj);
 };
 
@@ -78,16 +78,16 @@ const jsonToComponent = (obj, enableWrap = false, props = {}, actions = {}) => {
     }
     reactComponent = _cachedWrappedComponents[component];
   }
-  const reactComponentChildren = !schemaChildren || typeof schemaChildren === 'string' ? [ 
-    schemaChildren 
+  const reactComponentChildren = !schemaChildren || typeof schemaChildren === 'string' ? [
+    schemaChildren
   ] : (
     (schemaChildren || []).map(item => jsonToComponent(item, enableWrap, props, actions))
   );
 
   return React.createElement
-    .apply(this, [ 
-      reactComponent, 
-      Object.assign({}, obj, props, { key: obj._componentId, isComponentEditor: true }), ...reactComponentChildren 
+    .apply(this, [
+      reactComponent,
+      Object.assign({}, obj, props, { key: obj._componentId, isComponentEditor: true }), ...reactComponentChildren
     ]);
 };
 
@@ -158,6 +158,7 @@ const toJSX = (schema, indent = 0) =>{
     _isContainer: null,
     _componentId: null,
     _isRoot: null,
+    _path: null,
     component: null,
     children: null,
     editingComponentId: null,
@@ -210,7 +211,7 @@ const generateReactCode = (name='Demo', schema) => {
   const importAllComponents = getAllComponents(schema)
     .map((item=> `import ${item} from '../widgets/${item}';`))
     .join('\n');
-    
+
   return `import React from 'react';
 ${importAllComponents}
 
