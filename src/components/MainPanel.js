@@ -22,6 +22,7 @@ export default class MainPanel extends React.Component {
     startToEditComponent: PropTypes.func,
     deleteComponent: PropTypes.func,
     moveComponent: PropTypes.func,
+    saveLayout: PropTypes.func,
     downloadFile: PropTypes.func,
     editingPath: PropTypes.array
   };
@@ -54,14 +55,14 @@ export default class MainPanel extends React.Component {
     });
   }
 
-  generateSchemaCode = () => {
+  generateSchemaCode = (withExportDefault = true) => {
     const { schema } = this.props;
     const {
       icon,
       type,
       name
     } = this.state;
-    return 'export default ' + JSON.stringify({
+    return (withExportDefault ? 'export default ' : '') + JSON.stringify({
       iconClassName: `fa ${icon}`,
       type,
       name,
@@ -84,6 +85,21 @@ export default class MainPanel extends React.Component {
     const { downloadFile } = this.props;
     const { name } = this.state;
     downloadFile(`${name}-schema`, this.generateSchemaCode());
+  }
+
+  saveLayout = () => {
+    const {
+      icon,
+      type,
+      name
+    } = this.state;
+    const { schema } = this.props;
+    this.props.saveLayout({
+      iconClassName: `fa ${icon}`,
+      type,
+      name,
+      schema
+    });
   }
 
   onSelect = (key) => {
@@ -152,7 +168,7 @@ export default class MainPanel extends React.Component {
                 </Highlight>
 
                 <ButtonToolbar className="pull-right">
-                  <Button bsStyle="primary" >
+                  <Button bsStyle="primary" onClick={this.saveLayout} >
                     <i className="fa fa-save"/>&nbsp;Save
                   </Button>
                   <Button onClick={this.downloadJsxFile} >
@@ -173,7 +189,7 @@ export default class MainPanel extends React.Component {
                   { this.generateSchemaCode() }
                 </Highlight>
                 <ButtonToolbar className="pull-right">
-                  <Button bsStyle="primary" >
+                  <Button bsStyle="primary" onClick={this.saveLayout}>
                     <i className="fa fa-save"/>&nbsp;Save
                   </Button>
                   <Button onClick={this.downloadSchemaFile} >

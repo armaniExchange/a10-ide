@@ -107,7 +107,8 @@ export default class Sandbox extends React.Component {
       componentMeta: null,
       minimizeLeftPanel: false,
       showRightPanel: false,
-      editingPath: null
+      editingPath: null,
+      savedLayouts: JSON.parse(localStorage['savedLayouts'] || '{}')
     };
   }
 
@@ -154,6 +155,15 @@ export default class Sandbox extends React.Component {
     });
   }
 
+  saveLayout = (layout) => {
+    const { savedLayouts } = this.state
+    const newSavedLayouts = Object.assign({}, savedLayouts, {[layout.name] : layout});
+    localStorage['savedLayouts'] = JSON.stringify(newSavedLayouts);
+    this.setState({
+      savedLayouts: newSavedLayouts
+    });
+  }
+
   downloadFile = (filename, content)=> {
     var blob = new Blob([ content ], { type: 'text/javascript;charset=utf-8' });
     saveAs(blob, `${filename}.js`);
@@ -191,9 +201,11 @@ export default class Sandbox extends React.Component {
       editingComponentMeta,
       editingPath,
       minimizeLeftPanel,
-      showRightPanel
+      showRightPanel,
+      savedLayouts
     } = this.state;
 
+    const displayLayouts = Object.assign({}, allLayouts, savedLayouts);
     const Header = () => {
       return (
         <Navbar staticTop={true} fluid={true}>
@@ -218,7 +230,7 @@ export default class Sandbox extends React.Component {
                 minimizeLeftPanel ? null : (
                   <LeftPanel
                     widgets={allWidgets}
-                    layouts={allLayouts}
+                    layouts={displayLayouts}
                     onLayoutChange={this.onLayoutChange}
                     addComponentByClicking={this.addComponentByClicking}
                   />
@@ -234,6 +246,7 @@ export default class Sandbox extends React.Component {
                 startToEditComponent={this.startToEditComponent}
                 deleteComponent={this.deleteComponent}
                 moveComponent={this.moveComponent}
+                saveLayout={this.saveLayout}
                 downloadFile={this.downloadFile}
               />
             </Col>
