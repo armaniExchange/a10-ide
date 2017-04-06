@@ -7,9 +7,14 @@ function RootWidget({ children }) {
   //     {children}
   //   </div>
   // );
+
+  const getAuthToken = () => {
+    return sessionStorage.getItem('token');
+  };
+
   return (
     <div style={{ position: 'relative' }}>
-      <A10App>
+      <A10App getAuthToken={getAuthToken}>
         {children}
       </A10App>
     </div>
