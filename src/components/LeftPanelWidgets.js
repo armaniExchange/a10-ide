@@ -13,6 +13,7 @@ export default class LeftPanelWidgets extends React.Component {
     tileStyle: React.PropTypes.object,
     widgets: React.PropTypes.object.isRequired,
     addComponentByClicking: React.PropTypes.func,
+    onSearchingWidgetNameChange: React.PropTypes.func,
     ComponentCandidate: React.PropTypes.func
   };
 
@@ -26,7 +27,8 @@ export default class LeftPanelWidgets extends React.Component {
       tileStyle,
       widgets,
       ComponentCandidate,
-      addComponentByClicking
+      addComponentByClicking,
+      onSearchingWidgetNameChange
     } = this.props;
 
     const dragableTileStyle = Object.assign({ cursor: 'move' }, tileStyle);
@@ -39,11 +41,11 @@ export default class LeftPanelWidgets extends React.Component {
       <div>
         <FormGroup>
           <InputGroup>
-            <FormControl 
-              type="text" 
+            <FormControl
+              type="text"
               placeholder="Search widgets"
               value={searchingWidgetName}
-              onChange={this.onSearchingWidgetNameChange} />
+              onChange={onSearchingWidgetNameChange} />
             <InputGroup.Addon>
               <i className="fa fa-search" />
             </InputGroup.Addon>
@@ -82,7 +84,7 @@ export default class LeftPanelWidgets extends React.Component {
             </Panel>
           )
         }
-        
+
         <PanelGroup accordion defaultActiveKey="Field">
           {
             Object.keys(groupedWidgets).map(key=>{

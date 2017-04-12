@@ -80,7 +80,7 @@ export default function editableComponent({
     }))
 
     /* eslint-enable */
-    class Wrap extends Component {
+    class Wrap extends React.PureComponent {
       static propTypes = {
         _isContainer: PropTypes.bool,
         _componentId: PropTypes.string,
@@ -151,7 +151,7 @@ export default function editableComponent({
         componentClassName += ( isActive || isDragging ) ? 'editable-component-active ' : 'editable-component-normal ';
         componentClassName += _isContainer || _isRoot ? 'editable-component-container ' : '';
         componentClassName += _isRoot ? 'editable-component-root ' : '';
-        const propsWithouChildren = Object.assign({}, this.props, { children: null });
+        const propsWithouChildren = Object.assign({_isContainer: null}, this.props, { children: null });
         if (meta.widget.isWrapperItself) {
           return (
             <WrappedComponent
