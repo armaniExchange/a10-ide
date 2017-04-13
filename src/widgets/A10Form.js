@@ -1,12 +1,28 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 
-import { A10Form, widgetWrapper } from 'a10-widget';
+import { A10Form } from 'a10-widget';
 
-export default widgetWrapper()(A10Form, {
+function MyA10Form({ ...props }) {
+  const { children, ...rest } = props;
+  // schemaChildren
+  if (!children) return null;
+  const fieldChilds = children.slice(0, children.length - 1);
+  const submitChilds = children.slice(-1);
+  return (
+    <div className="editable-component-wrapper">
+      <A10Form {...rest}>
+        {fieldChilds}
+        {submitChilds}
+      </A10Form>
+    </div>
+  );
+}
+
+export default Object.assign(MyA10Form, {
   meta: {
     widget: {
       iconClassName: 'fa fa-wpforms',
-      type: 'Field',
+      type: 'A10 Widget - Form',
       name: 'A10Form',
       component: 'A10Form',
       display: 'block',
@@ -14,20 +30,16 @@ export default widgetWrapper()(A10Form, {
       description: ''
     },
     defaultProps: {
-      schema: 'slb-virtual-server',
-      redirect: { path: 'list' },
-      horizontal: true
+      horizontal: true,
+      schemaChildren: null,
+      submit: null,
+
+      action: '/axapi/v3/slb/virtual-server/',
+      method: 'post'
     },
-    propTypes: Object.assign({}, A10Form.propTypes, {
-      schema: PropTypes.string.isRequired,
-      redirect: PropTypes.object.isRequired,
-      horizontal: PropTypes.bool
-    }),
+    propTypes: A10Form.propTypes,
     propGroups: {
-      schema: 'basic',
-      redirect: 'basic',
-      horizontal: 'basic',
-      store: 'ignore'
+      action: 'basic'
     }
   }
 });

@@ -8,16 +8,17 @@ var app = express();
 var compiler = webpack(config);
 
 app.use(require('webpack-dev-middleware')(compiler, {
-  noInfo: true,
+  noInfo: false,
   publicPath: config.output.publicPath,
   stats: {
     colors: true
   }
 }));
+// app.use(express.static('dist'));
 app.use('/axapi', proxy({ target: 'https://192.168.99.54/', secure: false }));
 app.use(require('webpack-hot-middleware')(compiler));
 
-app.get('*', function (req, res) {
+app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'src/index.html'));
 });
 

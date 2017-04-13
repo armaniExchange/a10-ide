@@ -6,6 +6,7 @@ const getSchema = (name) => {
   return new Promise((resolve, reject) => {
     if (!name) {
       resolve({});
+      return;
     }
     System.import(`a10-schemas/src/${name}.json`).then(module => {
       const sa = new SchemaAnalysis(name, module);

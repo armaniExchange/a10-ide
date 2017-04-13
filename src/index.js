@@ -33,11 +33,11 @@ if (module.hot) {
   };
 
   render = () => {
-    try {
+    // try {
       renderApp();
-    } catch (error) {
-      renderError(error);
-    }
+    // } catch (error) {
+    //   renderError(error);
+    // }
   };
 
   const rerender = () => {

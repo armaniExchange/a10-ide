@@ -11,7 +11,8 @@ export default class LeftPanelLayout extends React.Component {
     searchingLayoutName: React.PropTypes.string,
     layouts: React.PropTypes.object.isRequired,
     onLayoutChange: React.PropTypes.func,
-    tileStyle: React.PropTypes.object
+    tileStyle: React.PropTypes.object,
+    onSearchingLayoutName: React.PropTypes.func
   };
 
   constructor(props) {
@@ -23,17 +24,18 @@ export default class LeftPanelLayout extends React.Component {
       searchingLayoutName,
       layouts,
       onLayoutChange,
-      tileStyle
+      tileStyle,
+      onSearchingLayoutName
     } = this.props;
     return (
       <div>
         <FormGroup>
           <InputGroup>
-            <FormControl 
-              type="text" 
+            <FormControl
+              type="text"
               placeholder="Search layouts"
               value={searchingLayoutName}
-              onChange={this.onSearchingLayoutName}
+              onChange={onSearchingLayoutName}
             />
             <InputGroup.Addon>
               <i className="fa fa-search" />
@@ -76,7 +78,7 @@ export default class LeftPanelLayout extends React.Component {
             </Panel>
           )
         }
-        
+
         <PanelGroup accordion defaultActiveKey="basic">
           <Panel header="basic" eventKey="basic" key="basic">
             {

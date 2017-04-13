@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { StandardPageLayout, A10Table, A10TableColumn, widgetWrapper } from 'a10-widget';
+import { StandardPageLayout, A10Table, A10TableColumn } from 'a10-widget';
 
 class MyA10Table extends Component {
 
@@ -28,55 +28,48 @@ class MyA10Table extends Component {
   }
 
   render() {
-    const { fields, primaryField, isComponentEditor, title, description } = this.props;
+    const { fields, primaryField, title, description } = this.props;
+console.log(A10Table);
     return (
-      <StandardPageLayout title={title} description={description}>
-        <A10Table pageMode responsive striped hover newLast loadOnInitial isComponentEditor={isComponentEditor}>
+        <A10Table {...this.props}>
           {this.renderFields()}
         </A10Table>
-      </StandardPageLayout>
     );
   }
 
 }
 
-export default widgetWrapper()(MyA10Table, {
+export default Object.assign(MyA10Table, {
   meta: {
     widget: {
       iconClassName: 'fa fa-wpforms',
-      type: 'Field',
+      type: 'A10 Widget',
       name: 'A10Table',
       component: 'A10Table',
-      display: 'block',
+      display: 'inline-block',
       isContainer: true,
       description: ''
     },
     defaultProps: {
-      // need fill these
-      actions: {},
-      schema: 'slb-virtual-server',
-      title: '',
-      description: '',
+      ...A10Table.defaultProps,
       fieldName: [],
       fieldTitle: [],
-      primaryField: ''
+      primaryField: '',
+      action: '',
+      dataKey: ''
     },
-    propTypes: Object.assign({}, A10Table.propTypes, {
-      schema: PropTypes.string.isRequired,
-      title: PropTypes.string,
-      description: PropTypes.string,
+    propTypes: {
+      ...A10Table.propTypes,
       fieldName: PropTypes.array,
       fieldTitle: PropTypes.array,
       primaryField: PropTypes.string
-    }),
+    },
     propGroups: {
-      schema: 'basic',
       title: 'basic',
       description: 'basic',
       fieldName: 'basic',
       fieldTitle: 'basic',
-      primaryField: 'basic',
-      store: 'ignore'
+      primaryField: 'basic'
     }
   }
 });

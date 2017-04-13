@@ -27,7 +27,13 @@ class ConvertField {
     this.mapping = {
       component: 'A10Field',
       name: `${this.schemaAnalysis.getName()}.${this.name}`,
-      label: _.startCase(this.name)
+      label: _.startCase(this.name),
+      schemaChildren: [
+        {
+          component: 'A10FormControl',
+          name: `${this.schemaAnalysis.getName()}.${this.name}.A10FormControl`
+        }
+      ]
     };
     this.options.condition && (this.mapping.conditional = this.options.condition);
   }

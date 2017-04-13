@@ -95,10 +95,11 @@ export default class LeftPanel extends Component {
       <Tabs id="sandbox-controller-panel">
         <br />
         <Tab eventKey={1} title="Widgets">
-          <LeftPanelWidgets 
+          <LeftPanelWidgets
             tileStyle={tileStyle}
-            searchingWidgetName={searchingWidgetName}
             widgets={widgets}
+            searchingWidgetName={searchingWidgetName}
+            onSearchingWidgetNameChange={this.onSearchingWidgetNameChange}
             addComponentByClicking={addComponentByClicking}
             ComponentCandidate={ComponentCandidate}
           />
@@ -108,13 +109,14 @@ export default class LeftPanel extends Component {
           <LeftPanelLayouts
             tileStyle={tileStyle}
             searchingLayoutName={searchingLayoutName}
+            onSearchingLayoutName={this.onSearchingLayoutName}
             layouts={layouts}
             onLayoutChange={onLayoutChange}
           />
         </Tab>
 
         <Tab eventKey={3} title="Schema">
-          <LeftPanelSchema 
+          <LeftPanelSchema
             tileStyle={tileStyle}
             selectedSchema={selectedSchema}
             schemaWidgets={schemaWidgets}

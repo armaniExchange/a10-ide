@@ -1,4 +1,5 @@
 import React from 'react';
+import fuzzy from 'fuzzy';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import Panel from 'react-bootstrap/lib/Panel';
 import PanelGroup from 'react-bootstrap/lib/PanelGroup';
@@ -20,11 +21,19 @@ export default class LeftPanelSchema extends React.Component {
 
   static defaultProps = {
     schemaWidgets: [],
-    schemaLayouts: []
+    schemaLayouts: [],
+    selectedSchema: ''
   };
 
   constructor(props) {
     super(props);
+    this.state = {
+      inputText: ''
+    };
+  }
+
+  onInputChange = (value) => {
+    this.setState({ inputText: value });
   }
 
   render() {
@@ -39,14 +48,18 @@ export default class LeftPanelSchema extends React.Component {
       onSchemaSelect
     } = this.props;
     const dragableTileStyle = Object.assign({ cursor: 'move' }, tileStyle);
+    const options = fuzzy.filter(this.state.inputText, allSchemas)
+      .map(el=> ({ value: el.string, label: el.string }));
     return (
       <div>
         <FormGroup>
           <Select
             name="form-field-name"
             value={selectedSchema}
-            options={allSchemas.map((item)=>{return { value: item, label: item }; })}
+            options={options}
+            filterOption={()=>true}
             onChange={onSchemaSelect}
+            onInputChange={this.onInputChange}
           />
         </FormGroup>
         <PanelGroup accordion defaultActiveKey="Layout">
