@@ -103,7 +103,6 @@ export default class MainPanel extends React.Component {
   }
 
   onSelect = (key) => {
-    console.log('key:' + key);
     this.setState({ activeKey: key });
   }
 
@@ -117,7 +116,7 @@ export default class MainPanel extends React.Component {
           <i className="fa fa-download"/>&nbsp;Download
         </Button>
       </ButtonToolbar>
-    )
+    );
   }
 
   render() {
