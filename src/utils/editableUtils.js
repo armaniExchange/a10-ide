@@ -24,14 +24,14 @@ const registerComponents = (componentsDict) => {
 let _cachedWrappedComponents;
 _cachedWrappedComponents = {};
 
-const prepareSchema = (schema, meta ={_keypath: [], _path: []}) => {
+const prepareSchema = (schema, meta ={ _keypath: [], _path: [] }) => {
   if (schema._isContainer || registeredComponents[schema.component] && registeredComponents[schema.component].meta.widget.isContainer) {
     schema._isContainer = true;
   }
 
   return {
-    ...meta,
     ...schema,
+    ...meta,
     schemaChildren: !schema.schemaChildren || typeof schema.schemaChildren === 'string' ? schema.schemaChildren :
       schema.schemaChildren
       .map((item, index) => {
@@ -44,15 +44,15 @@ const prepareSchema = (schema, meta ={_keypath: [], _path: []}) => {
               component: item.component
             }
           ],
-          _keypath: [...meta._keypath, 'schemaChildren', index],
+          _keypath: [ ...meta._keypath, 'schemaChildren', index ]
         };
         return prepareSchema(item, nextMeta);
       })
   };
 };
 
-const loadSchema = (schema, notRoot = false) => {
-  return Object.assign({ _isRoot: true }, prepareSchema(schema))
+const loadSchema = (schema) => {
+  return Object.assign({ _isRoot: true }, prepareSchema(schema));
 };
 
 const jsonToComponent = (obj, enableWrap = false, props = {}, actions = {}) => {

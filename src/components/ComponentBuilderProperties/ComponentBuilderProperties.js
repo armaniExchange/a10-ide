@@ -165,7 +165,7 @@ export default class ComponentBuilderProperties extends Component {
 
 
   render() {
-    const { 
+    const {
       editingComponentId,
       componentMeta
     } = this.props;

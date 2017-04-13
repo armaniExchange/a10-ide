@@ -15,7 +15,7 @@ app.use(require('webpack-dev-middleware')(compiler, {
   }
 }));
 // app.use(express.static('dist'));
-app.use('/axapi', proxy({ target: 'https://192.168.99.54/', secure: false }));
+app.use('/axapi', proxy({ target: 'https://192.168.99.51/', secure: false }));
 app.use(require('webpack-hot-middleware')(compiler));
 
 app.get('/', function (req, res) {

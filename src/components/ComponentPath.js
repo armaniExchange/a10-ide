@@ -18,7 +18,7 @@ export default class ComponentPath extends React.Component {
     const {
       path
     } = this.props;
-    return path && path.length && (
+    return path && path.length ? (
       <Breadcrumb>
         {
           path.map((item) => {
@@ -27,10 +27,10 @@ export default class ComponentPath extends React.Component {
                 { item.component }
               </Breadcrumb.Item>
             );
-            
+
           })
         }
        </Breadcrumb>
-    );
+    ) : null;
   }
 }
