@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PureComponent, PropTypes } from 'react';
+import _ from 'lodash';
 import { findDOMNode } from 'react-dom';
 import {
   DragSource as dragSource,
@@ -80,7 +81,7 @@ export default function editableComponent({
     }))
 
     /* eslint-enable */
-    class Wrap extends React.PureComponent {
+    class Wrap extends Component {
       static propTypes = {
         _isContainer: PropTypes.bool,
         _componentId: PropTypes.string,
@@ -91,6 +92,12 @@ export default function editableComponent({
         connectDropTarget: PropTypes.func,
         children: PropTypes.node
       };
+
+      shouldComponentUpdate(nextProps, nextState) {
+        const isPropsEqual = _.isEqual(this.props, nextProps);
+        const isStateEqual = _.isEqual(this.state, nextState);
+        return !isPropsEqual || !isStateEqual;
+      }
 
       deleteComponent = (event) => {
         event.stopPropagation();
@@ -117,10 +124,27 @@ export default function editableComponent({
         return domNode;
       }
 
+      renderDebugInfo = () => {
+        const {
+          _componentId,
+          // _isContainer,
+          isDragging,
+          editingComponentId
+        } = this.props;
+        return (
+          <div>
+            { `isDragging: ${isDragging}` }
+            { `editingComponentId: ${editingComponentId}` }
+            { `_componentId: ${_componentId}` }
+          </div>
+        );
+      }
+
       renderToolbar = () => {
         const { _isRoot } = this.props;
         return !_isRoot && (
           <div className="editable-component-toolbar">
+            { /*this.renderDebugInfo()*/ }
             <i className="fa fa-cog" onClick={this.editProperties}/>
             <i className="fa fa-trash" onClick={this.deleteComponent}/>
           </div>

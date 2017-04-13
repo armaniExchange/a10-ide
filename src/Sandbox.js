@@ -137,7 +137,7 @@ export default class Sandbox extends React.Component {
 
   moveComponent = _.throttle((dragComponent, dropComponentId, newPosition) => {
     const newSchema = editableUtils.moveComponent(this.state.reactSchema, dragComponent, dropComponentId, newPosition);
-    this.setState({ reactSchema: newSchema });
+    this.setState({ reactSchema: editableUtils.prepareSchema(newSchema) });
   }, 100)
 
   updateComponent = (_componentId, component) => {
