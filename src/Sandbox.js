@@ -180,10 +180,13 @@ export default class Sandbox extends React.Component {
       editingComponentId,
       editingComponentMeta
     } = this.state;
+    if(!dragComponent) {
+      return;
+    }
     if (editingComponentId && editingComponentMeta.widget.isContainer) {
-      this.moveComponent(dragComponent, editingComponentId, true, 'inside');
+      this.moveComponent(dragComponent, editingComponentId, 'inside');
     } else {
-      this.moveComponent(dragComponent, 'root', true, 'inside');
+      this.moveComponent(dragComponent, 'root', 'inside');
     }
   }
 

@@ -52,7 +52,7 @@ const prepareSchema = (schema, meta ={ _keypath: [], _path: [] }) => {
 };
 
 const loadSchema = (schema) => {
-  return Object.assign({ _isRoot: true }, prepareSchema(schema));
+  return Object.assign({ _isRoot: true, _componentId: 'root' }, prepareSchema(schema));
 };
 
 const jsonToComponent = (obj, enableWrap = false, props = {}, actions = {}) => {
@@ -117,19 +117,15 @@ const updateComponent = (schema, _componentId, component) => {
 };
 
 const moveComponent = (schema, dragComponent, dropComponentId, newPosition) => {
-  if (dropComponentId === 'root') {
-    let schemaChildren = schema.schemaChildren || [];
-    if ( schemaChildren.map((item)=>item._componentId).includes(dragComponent._componentId)) {
-      return schema;
-    }
-    return {
-      ...schema,
-      schemaChildren: [ ...schemaChildren, dragComponent ]
-    };
-  }
+  const result = _moveComponent({ schemaChildren: [ schema ] }, dragComponent, dropComponentId, newPosition);
+  return result.schemaChildren[0];
+};
+
+const _moveComponent = (schema, dragComponent, dropComponentId, newPosition) => {
   const modifiedChildren = !schema.schemaChildren || typeof schema.schemaChildren === 'string' ? schema.schemaChildren :
-    schema.schemaChildren.filter(item => item._componentId !== dragComponent._componentId)
-    .map(item => moveComponent(item, dragComponent, dropComponentId, newPosition))
+    schema.schemaChildren
+    .filter(item => item._componentId !== dragComponent._componentId)
+    .map(item => _moveComponent(item, dragComponent, dropComponentId, newPosition))
     .reduce((prev, current) => {
       if (current._componentId === dropComponentId) {
         if (newPosition === 'inside') {

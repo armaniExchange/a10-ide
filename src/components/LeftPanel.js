@@ -90,7 +90,7 @@ export default class LeftPanel extends Component {
       whiteSpace: 'nowrap'
 
     };
-    
+
     return (
       <Tabs id="sandbox-controller-panel">
         <br />
@@ -111,6 +111,7 @@ export default class LeftPanel extends Component {
             searchingLayoutName={searchingLayoutName}
             onSearchingLayoutName={this.onSearchingLayoutName}
             layouts={layouts}
+            addComponentByClicking={addComponentByClicking}
             onLayoutChange={onLayoutChange}
           />
         </Tab>

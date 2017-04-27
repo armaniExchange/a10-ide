@@ -35,17 +35,21 @@ export default function editableComponent({
     if (props._isRoot) {
       newPosition = 'inside';
     } else if (props._isContainer) {
-      if ((dropClientY >= dropMiddleY * 0.5 && dropClientY <= dropMiddleY * 1.5) ||
-        (dropClientX >= dropMiddleX * 0.5 && dropClientX <= dropMiddleX * 1.5)
+      if ((dropClientY >= dropMiddleY * 0.2 && dropClientY <= dropMiddleY * 1.8) ||
+        (dropClientX >= dropMiddleX * 0.2 && dropClientX <= dropMiddleX * 1.8)
       ) {
         newPosition = 'inside';
-      } else if (dropClientY > dropMiddleY * 1.5 || dropClientX > dropMiddleX * 1.5) {
+      } else if (dropClientY > dropMiddleY * 1.8 || dropClientX > dropMiddleX * 1.8) {
         newPosition = 'after';
       }
     } else {
       if (dropClientY > dropMiddleY || dropClientX > dropMiddleX) {
         newPosition = 'after';
       }
+    }
+    const isMovingComponentToChildComponent = props._path.map(item=>item._componentId).includes(item._componentId);
+    if (isMovingComponentToChildComponent) {
+      return;
     }
     moveComponent(Object.assign({}, item, { children: null }), props._componentId, newPosition);
   };
@@ -170,7 +174,6 @@ export default function editableComponent({
           _isRoot,
           editingComponentId
         } = this.props;
-        console.log(`render: ${_componentId}`);
         const isActive = _componentId === editingComponentId;
         let componentClassName = '';
         componentClassName += ( isActive || isDragging ) ? 'editable-component-active ' : 'editable-component-normal ';

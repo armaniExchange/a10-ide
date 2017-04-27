@@ -6,6 +6,8 @@ import PanelGroup from 'react-bootstrap/lib/PanelGroup';
 import Select from 'react-select';
 
 import allSchemas from 'a10-schemas/all-schemas.json';
+import GroupComponentCandidate from './GroupComponentCandidate';
+
 
 export default class LeftPanelSchema extends React.Component {
   static propTypes = {
@@ -67,16 +69,15 @@ export default class LeftPanelSchema extends React.Component {
             {
               schemaLayouts.map((item, index)=>{
                 return (
-                  <span
+                  <GroupComponentCandidate
                     key={index}
                     style={tileStyle}
-                    title={item.name}
-                    onClick={onLayoutChange.bind(this, item.schema)}
-                  >
-                    <i className={item.iconClassName} />
-                    <br />
-                    {item.name}
-                  </span>
+                    addComponentByClicking={addComponentByClicking}
+                    onLayoutChange={onLayoutChange}
+                    name={item.name}
+                    schema={item.schema}
+                    iconClassName={item.iconClassName}
+                  />
                 );
               })
             }

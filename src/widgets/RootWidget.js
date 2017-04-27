@@ -21,20 +21,7 @@ function RootWidget({ children }) {
   );
 }
 
-export default Object.assign(RootWidget, {
-  meta: {
-    widget: {
-      name: 'RootWidget',
-      component: 'RootWidget',
-      isContainer: true,
-      hideFromCandidates: true,
-      description: '',
-      isWrapperItself: true
-    }
-  }
-});
-
-// export default widgetWrapper()(RootWidget, {
+// export default Object.assign(RootWidget, {
 //   meta: {
 //     widget: {
 //       name: 'RootWidget',
@@ -46,3 +33,16 @@ export default Object.assign(RootWidget, {
 //     }
 //   }
 // });
+
+export default widgetWrapper()(RootWidget, {
+  meta: {
+    widget: {
+      name: 'RootWidget',
+      component: 'RootWidget',
+      isContainer: true,
+      hideFromCandidates: true,
+      description: '',
+      isWrapperItself: true
+    }
+  }
+});

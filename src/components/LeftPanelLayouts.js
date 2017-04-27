@@ -5,12 +5,14 @@ import InputGroup from 'react-bootstrap/lib/InputGroup';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import PanelGroup from 'react-bootstrap/lib/PanelGroup';
 import Panel from 'react-bootstrap/lib/Panel';
+import GroupComponentCandidate from './GroupComponentCandidate';
 
 export default class LeftPanelLayout extends React.Component {
   static propTypes = {
     searchingLayoutName: React.PropTypes.string,
     layouts: React.PropTypes.object.isRequired,
     onLayoutChange: React.PropTypes.func,
+    addComponentByClicking: React.PropTypes.func,
     tileStyle: React.PropTypes.object,
     onSearchingLayoutName: React.PropTypes.func
   };
@@ -23,9 +25,10 @@ export default class LeftPanelLayout extends React.Component {
     const {
       searchingLayoutName,
       layouts,
-      onLayoutChange,
       tileStyle,
-      onSearchingLayoutName
+      onSearchingLayoutName,
+      addComponentByClicking,
+      onLayoutChange
     } = this.props;
     return (
       <div>
@@ -63,15 +66,15 @@ export default class LeftPanelLayout extends React.Component {
                 }))
                 .map((item, index) => {
                   return (
-                    <span
+                    <GroupComponentCandidate
                       key={index}
                       style={tileStyle}
-                      onClick={onLayoutChange.bind(this, item.schema)}
-                    >
-                      <i className={item.iconClassName} />
-                      <br />
-                      {item.name}
-                    </span>
+                      addComponentByClicking={addComponentByClicking}
+                      onLayoutChange={onLayoutChange}
+                      name={item.name}
+                      schema={item.schema}
+                      iconClassName={item.iconClassName}
+                    />
                   );
                 })
               }
@@ -82,18 +85,18 @@ export default class LeftPanelLayout extends React.Component {
         <PanelGroup accordion defaultActiveKey="basic">
           <Panel header="basic" eventKey="basic" key="basic">
             {
-              Object.values(layouts).map((item, index)=>{
+              Object.values(layouts)
+              .map((item, index)=>{
                 return (
-                  <span
+                  <GroupComponentCandidate
                     key={index}
                     style={tileStyle}
-                    title={item.name}
-                    onClick={onLayoutChange.bind(this, item.schema)}
-                  >
-                    <i className={item.iconClassName} />
-                    <br />
-                    {item.name}
-                  </span>
+                    addComponentByClicking={addComponentByClicking}
+                    onLayoutChange={onLayoutChange}
+                    name={item.name}
+                    schema={item.schema}
+                    iconClassName={item.iconClassName}
+                  />
                 );
               })
             }
