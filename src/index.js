@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createWidgetStore } from 'a10-widget';
+import { createWidgetStore } from '@a10/a10-widget';
 
 import 'font-awesome-webpack';
 import 'bootstrap/dist/css/bootstrap.css';

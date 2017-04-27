@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 // import { BootstrapTable } from 'react-bootstrap-table';  // in ECMAScript 6
-import { widgetWrapper } from 'a10-widget';
 import { FormControl, FormGroup, ControlLabel, Row, Col, Button, HelpBlock } from 'react-bootstrap';
+
+import { widgetWrapper } from '@a10/a10-widget';
 
 class EditableCom extends React.Component {
   static displayName = 'EditableCom';

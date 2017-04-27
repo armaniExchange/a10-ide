@@ -1,6 +1,7 @@
 import React from 'react';
-import { widgetWrapper } from 'a10-widget';
 import Form from 'react-bootstrap/lib/Form';
+
+import { widgetWrapper } from '@a10/a10-widget';
 
 export default widgetWrapper()(Form, {
   meta: {

@@ -1,5 +1,4 @@
-
-import { A10Radio } from 'a10-widget';
+import { A10Radio } from '@a10/a10-widget';
 
 export default Object.assign(A10Radio, {
   meta: {

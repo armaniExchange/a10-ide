@@ -1,6 +1,7 @@
 import React from 'react';
-import { widgetWrapper } from 'a10-widget';
 import Radio from 'react-bootstrap/lib/Radio';
+
+import { widgetWrapper } from '@a10/a10-widget';
 
 export default widgetWrapper()(Radio, {
   meta: {

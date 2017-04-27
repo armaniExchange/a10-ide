@@ -1,5 +1,5 @@
 import React from 'react';
-import { widgetWrapper, A10App } from 'a10-widget';
+import { widgetWrapper, A10App } from '@a10/a10-widget';
 
 function RootWidget({ children }) {
   // return (

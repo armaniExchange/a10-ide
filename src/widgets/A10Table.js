@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { StandardPageLayout, A10Table, A10TableColumn } from 'a10-widget';
+import { StandardPageLayout, A10Table, A10TableColumn } from '@a10/a10-widget';
 
 class MyA10Table extends Component {
 

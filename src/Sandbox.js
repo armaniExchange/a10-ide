@@ -17,8 +17,8 @@ import LeftPanel from './components/LeftPanel';
 import MainPanel from './components/MainPanel';
 import editableUtils from './utils/editableUtils';
 
-import { registerWidgetPlugins } from 'a10-widget';
-import { SchemaPlugin } from 'a10-widget-lib';
+import { registerWidgetPlugins } from '@a10/a10-widget';
+import { SchemaPlugin } from '@a10/a10-widget-lib';
 
 registerWidgetPlugins([ SchemaPlugin ]);
 

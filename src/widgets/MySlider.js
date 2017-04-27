@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import Slider from 'rc-slider';
-
-import { widgetWrapper } from 'a10-widget';
 import 'rc-slider/assets/index.css';
+
+import { widgetWrapper } from '@a10/a10-widget';
 
 class MySlider extends Component {
 

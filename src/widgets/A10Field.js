@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import { A10Field, A10FormControl, A10Checkbox, A10DynamicSelect, A10Radio } from 'a10-widget';
+import { A10Field, A10FormControl, A10Checkbox, A10DynamicSelect, A10Radio } from '@a10/a10-widget';
 
 
 function renderInput(inputType, selectOptions) {

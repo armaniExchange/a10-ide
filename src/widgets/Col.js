@@ -1,6 +1,7 @@
 import React from 'react';
-import { widgetWrapper } from 'a10-widget';
 import Col from 'react-bootstrap/lib/Col';
+
+import { widgetWrapper } from '@a10/a10-widget';
 
 export default widgetWrapper()(Col, {
   meta: {

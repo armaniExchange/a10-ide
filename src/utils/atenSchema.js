@@ -8,7 +8,7 @@ const getSchema = (name) => {
       resolve({});
       return;
     }
-    System.import(`a10-schemas/src/${name}.json`).then(module => {
+    System.import(`@a10/a10-schemas/src/${name}.json`).then(module => {
       const sa = new SchemaAnalysis(name, module);
       console.log(module);
       resolve({

@@ -1,6 +1,7 @@
 import React from 'react';
-import { widgetWrapper } from 'a10-widget';
 import Panel from 'react-bootstrap/lib/Panel';
+
+import { widgetWrapper } from '@a10/a10-widget';
 
 export default widgetWrapper()(Panel, {
   meta: {

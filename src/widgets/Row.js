@@ -1,6 +1,7 @@
 import React from 'react';
-import { widgetWrapper } from 'a10-widget';
 import Row from 'react-bootstrap/lib/Row';
+
+import { widgetWrapper } from '@a10/a10-widget';
 
 export default widgetWrapper()(Row, {
   meta: {

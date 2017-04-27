@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { A10FormControl } from 'a10-widget';
+import { A10FormControl } from '@a10/a10-widget';
 
 export default Object.assign(A10FormControl, {
   meta: {

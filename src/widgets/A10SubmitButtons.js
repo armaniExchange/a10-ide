@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { A10SubmitButtons } from 'a10-widget';
+import { A10SubmitButtons } from '@a10/a10-widget';
 
 function MyA10SubmitButtons({ ...props }) {
   let newProps = {};

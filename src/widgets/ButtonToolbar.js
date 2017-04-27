@@ -1,6 +1,7 @@
 import React from 'react';
-import { widgetWrapper } from 'a10-widget';
 import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
+
+import { widgetWrapper } from '@a10/a10-widget';
 
 export default widgetWrapper()(ButtonToolbar, {
   meta: {

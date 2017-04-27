@@ -1,6 +1,7 @@
 import React from 'react';
-import { widgetWrapper } from 'a10-widget';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
+
+import { widgetWrapper } from '@a10/a10-widget';
 
 function CustomizedDropdownButton({ ...props }) {
   return (

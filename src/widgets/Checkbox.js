@@ -1,6 +1,7 @@
 import React from 'react';
-import { widgetWrapper } from 'a10-widget';
 import Checkbox from 'react-bootstrap/lib/Checkbox';
+
+import { widgetWrapper } from '@a10/a10-widget';
 
 export default widgetWrapper()(Checkbox, {
   meta: {

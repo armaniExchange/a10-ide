@@ -1,6 +1,7 @@
 import React from 'react';
-import { widgetWrapper } from 'a10-widget';
 import Button from 'react-bootstrap/lib/Button';
+
+import { widgetWrapper } from '@a10/a10-widget';
 
 export default widgetWrapper()(Button, {
   meta: {

@@ -1,5 +1,5 @@
 
-import { A10DynamicSelect } from 'a10-widget';
+import { A10DynamicSelect } from '@a10/a10-widget';
 
 export default Object.assign(A10DynamicSelect, {
   meta: {

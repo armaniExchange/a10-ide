@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { A10MultiField, A10Field, A10FormControl } from 'a10-widget';
+import { A10MultiField, A10Field, A10FormControl } from '@a10/a10-widget';
 
 // function MyA10MultiField(props) {
 //   return (
