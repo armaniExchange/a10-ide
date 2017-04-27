@@ -18,7 +18,7 @@ export default function (componentCandidate) {
         component: props.component,
         _componentId: _.uniqueId(),
         _isContainer: meta.widget.isContainer
-      }, meta.defaultProps ? { ...meta.defaultProps } : {}, 
+      }, meta.defaultProps ? { ...meta.defaultProps } : {},
         props.meta && props.meta.defaultProps ? { ...props.meta.defaultProps } : {}
       );
       return item;
@@ -59,9 +59,9 @@ export default function (componentCandidate) {
       } = componentModule;
 
       return connectDragSource(
-        <div 
+        <div
           title={name }
-          style={style} 
+          style={style}
           onClick={this.onClick}>
           <i className={iconClassName} />
           <br/>

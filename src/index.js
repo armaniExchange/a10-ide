@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createWidgetStore } from 'a10-widget';
 
+import 'font-awesome-webpack';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.min.css';
+
 const store = createWidgetStore('app');
 
 const dest = document.getElementById('content');
